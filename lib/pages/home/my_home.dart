@@ -26,7 +26,47 @@ class HomePage extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text("Nylo"),
+          title: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Welcome",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              userInfo.when(
+                data: (names) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      names.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  return Center(
+                    child: Text('Error: $error'),
+                  );
+                },
+                loading: () {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
+            ],
+          ),
           actions: [
             Padding(
               padding: const EdgeInsets.only(
@@ -67,68 +107,32 @@ class HomePage extends ConsumerWidget {
         ),
         body: Column(
           children: [
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: ClipRRect(
-                child: SvgPicture.asset('assets/icons/image2vector.svg'),
-              ),
-            ),
             const SizedBox(
-              height: 15,
+              height: 25,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Welcome",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).colorScheme.primary,
+            Center(
+              child: SizedBox(
+                height: 100,
+                width: 500,
+                child: ClipRRect(
+                  child: SvgPicture.asset(
+                    'assets/icons/nylo_v1.svg',
+                    alignment: Alignment.centerLeft,
+                    fit: BoxFit.fitWidth,
+                    height: 125,
                   ),
                 ),
               ),
             ),
             const SizedBox(
-              height: 10,
-            ),
-            userInfo.when(
-              data: (names) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      names.name,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                );
-              },
-              error: (error, stackTrace) {
-                return Center(
-                  child: Text('Error: $error'),
-                );
-              },
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 25,
+              height: 15,
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 20, right: 30),
+              padding: EdgeInsets.only(left: 20, right: 40),
               child: Text(
                 "Connect with study partners and tutors easily.",
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
