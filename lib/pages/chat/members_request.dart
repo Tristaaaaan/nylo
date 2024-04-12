@@ -53,6 +53,12 @@ class MembersRequest extends ConsumerWidget {
                         child: userInfo.when(
                             data: (data) => Row(
                                   children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: NetworkImage(
+                                        data.imageUrl,
+                                      ),
+                                    ),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),

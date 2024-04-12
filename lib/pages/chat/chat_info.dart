@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:study_buddy/components/containers/chat_info_container.dart';
 import 'package:study_buddy/components/containers/chat_info_containers/chat_info_container_with_switch.dart';
 import 'package:study_buddy/components/dialogs/alert_dialog.dart';
+import 'package:study_buddy/components/image_placeholder/image_placeholder.dart';
 import 'package:study_buddy/pages/chat/members.dart';
 import 'package:study_buddy/pages/chat/members_request.dart';
 import 'package:study_buddy/structure/providers/groupchat_provider.dart';
@@ -101,16 +102,21 @@ class ChatInfo extends ConsumerWidget {
                                         .colorScheme
                                         .tertiaryContainer,
                                   ),
-                                  CircleAvatar(
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .background,
-                                    backgroundImage: image.groupChatImage !=
-                                            null
-                                        ? NetworkImage(image.groupChatImage!)
-                                        : null,
-                                    radius: 58,
-                                  ),
+                                  image.groupChatImage != ''
+                                      ? CircleAvatar(
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          backgroundImage: NetworkImage(
+                                              image.groupChatImage!),
+                                          radius: 58,
+                                        )
+                                      : ImagePlaceholder(
+                                          title: courseCode,
+                                          subtitle: "Study Group",
+                                          titleFontSize: 10,
+                                          subtitleFontSize: 8,
+                                        ),
                                   Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: Align(
