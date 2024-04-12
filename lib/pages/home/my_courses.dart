@@ -38,6 +38,8 @@ class FindCourses extends ConsumerWidget {
                   builder: (context) => SearchCourse(),
                 ),
               );
+              ref.read(courseSearchQueryLengthProvider.notifier).state = 0;
+              ref.read(courseSearchQueryProvider.notifier).state = "";
             },
             icon: const Icon(Icons.search),
           ),

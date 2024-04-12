@@ -26,6 +26,10 @@ class SearchCourse extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextField(
               onChanged: (value) {
+                int characterCount = value.length;
+                ref
+                    .read(courseSearchQueryLengthProvider.notifier)
+                    .update((state) => characterCount);
                 ref
                     .read(courseSearchQueryProvider.notifier)
                     .update((state) => value);
@@ -50,55 +54,66 @@ class SearchCourse extends ConsumerWidget {
                       TextStyle(color: Theme.of(context).colorScheme.primary)),
             ),
           ),
-          Expanded(
-            child: Consumer(
-              builder: (context, ref, child) {
-                final unenrolledCourses = ref.watch(
-                  unenrolledCoursesProvider(_auth.currentUser!.uid),
-                );
-                return unenrolledCourses.when(data: (courses) {
-                  if (courses.isEmpty) {
-                    return const NoContent(
-                        icon: 'assets/icons/study-student_svgrepo.com.svg',
-                        onPressed: null,
-                        description:
-                            "There are no courses available at the moment.",
-                        buttonText: '');
-                  } else {
-                    return ListView.builder(
-                      itemCount: courses.length,
-                      itemBuilder: (context, index) {
-                        final course = courses[index];
-                        return ListTile(
-                          title: Text(course.subject_code),
-                          subtitle: Text(course.subject_title),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.add_circle_outline_outlined),
-                            onPressed: () async {
-                              ref.read(courseProvider).addCourse(
-                                    course.subject_code,
-                                    course.subject_title,
-                                    course.subject_id,
-                                    ref.watch(setGlobalUniversityId),
-                                  );
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }, error: (error, stackTrace) {
-                  return Center(
-                    child: Text('Error: $error'),
-                  );
-                }, loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                });
-              },
+          if (ref.watch(courseSearchQueryLengthProvider) <= 3)
+            const Expanded(
+              child: Center(
+                child: Text(
+                  "Search courses by subject code and title",
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-          ),
+          if (ref.watch(courseSearchQueryLengthProvider) >= 3)
+            Expanded(
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final unenrolledCourses = ref.watch(
+                    unenrolledCoursesProvider(_auth.currentUser!.uid),
+                  );
+                  return unenrolledCourses.when(data: (courses) {
+                    if (courses.isEmpty) {
+                      return const NoContent(
+                          icon: 'assets/icons/study-student_svgrepo.com.svg',
+                          onPressed: null,
+                          description:
+                              "There are no courses available at the moment.",
+                          buttonText: '');
+                    } else {
+                      return ListView.builder(
+                        itemCount: courses.length,
+                        itemBuilder: (context, index) {
+                          final course = courses[index];
+                          return ListTile(
+                            title: Text(course.subject_code),
+                            subtitle: Text(course.subject_title),
+                            trailing: IconButton(
+                              icon:
+                                  const Icon(Icons.add_circle_outline_outlined),
+                              onPressed: () async {
+                                ref.read(courseProvider).addCourse(
+                                      course.subject_code,
+                                      course.subject_title,
+                                      course.subject_id,
+                                      ref.watch(setGlobalUniversityId),
+                                    );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }, error: (error, stackTrace) {
+                    return Center(
+                      child: Text('Error: $error'),
+                    );
+                  }, loading: () {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  });
+                },
+              ),
+            ),
         ],
       ),
     );

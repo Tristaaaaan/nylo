@@ -109,6 +109,8 @@ final unenrolledCoursesProvider = StreamProvider.family
 
 final courseSearchQueryProvider = StateProvider<String>((ref) => '');
 
+final courseSearchQueryLengthProvider = StateProvider<int>((ref) => 0);
+
 final courseProvider = StateProvider.autoDispose<Courses>((ref) {
   return Courses();
 });
