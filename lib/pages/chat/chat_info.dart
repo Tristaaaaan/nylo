@@ -298,15 +298,18 @@ class ChatInfo extends ConsumerWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Others",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
+                    if (members.length == 1 &&
+                            creator == auth.currentUser!.uid ||
+                        members.length != 1 && creator != auth.currentUser!.uid)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Others",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),

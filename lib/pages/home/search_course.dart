@@ -54,7 +54,7 @@ class SearchCourse extends ConsumerWidget {
                       TextStyle(color: Theme.of(context).colorScheme.primary)),
             ),
           ),
-          if (ref.watch(courseSearchQueryLengthProvider) <= 3)
+          if (ref.watch(courseSearchQueryLengthProvider) < 3)
             const Expanded(
               child: Center(
                 child: Text(
