@@ -16,7 +16,7 @@ class GroupChatModel {
   final String studyGroupCourseId;
   final Timestamp timestamp;
   final List<dynamic> membersId;
-  final List<dynamic> membersRequest;
+
   final List<dynamic> membersRequestId;
   final String lastMessage;
   final String lastMessageSender;
@@ -35,7 +35,6 @@ class GroupChatModel {
     required this.studyGroupCourseId,
     required this.timestamp,
     required this.membersId,
-    required this.membersRequest,
     required this.membersRequestId,
     required this.lastMessage,
     required this.lastMessageSender,
@@ -56,7 +55,6 @@ class GroupChatModel {
       'studyGroupCourseId': studyGroupCourseId,
       'createdAt': timestamp,
       'membersId': membersId,
-      'membersRequest': membersRequest,
       'membersRequestId': membersRequestId,
       'lastMessage': lastMessage,
       'lastMessageSender': lastMessageSender,
@@ -79,8 +77,6 @@ class GroupChatModel {
       studyGroupCourseId: map['studyGroupCourseId'] as String,
       timestamp: Timestamp.fromDate(DateTime.parse(map['createdAt'] as String)),
       membersId: List<dynamic>.from((map['membersId'] as List<dynamic>)),
-      membersRequest:
-          List<dynamic>.from((map['membersRequest'] as List<dynamic>)),
       membersRequestId:
           List<dynamic>.from((map['membersRequestId'] as List<dynamic>)),
       lastMessage: map['lastMessage'] as String,
@@ -109,7 +105,6 @@ class GroupChatModel {
         studyGroupCourseId: doc['studyGroupCourseId'],
         timestamp: doc['createdAt'],
         membersId: doc['membersId'],
-        membersRequest: doc['membersRequest'],
         membersRequestId: doc['membersRequestId'],
         lastMessage: doc['lastMessage'],
         lastMessageSender: doc['lastMessageSender'],

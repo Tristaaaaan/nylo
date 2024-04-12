@@ -44,7 +44,6 @@ class MemberRequest {
         .collection("study_groups")
         .doc(chatId)
         .update({
-      'membersRequest': FieldValue.arrayUnion([requestorName]),
       'membersRequestId': FieldValue.arrayUnion([userId]),
     });
   }
@@ -52,7 +51,6 @@ class MemberRequest {
   // Update the Study Group Member List
   Future<void> acceptOrreject(
     String documentId,
-    String userEmail,
     String userId,
     bool isAccepted,
     String title,
@@ -116,9 +114,6 @@ class MemberRequest {
           .doc(documentId)
           .update(
         {
-          'membersRequest': FieldValue.arrayRemove(
-            [userEmail],
-          ),
           'membersRequestId': FieldValue.arrayRemove(
             [userId],
           ),
@@ -152,9 +147,6 @@ class MemberRequest {
           .doc(documentId)
           .update(
         {
-          'membersRequest': FieldValue.arrayRemove(
-            [userEmail],
-          ),
           'membersRequestId': FieldValue.arrayRemove(
             [userId],
           ),

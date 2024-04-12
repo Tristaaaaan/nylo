@@ -174,15 +174,15 @@ class HomePage extends ConsumerWidget {
                         print("value: $value");
                         return Expanded(
                           child: GridView.builder(
-                            itemCount:
-                                CategoryModel.getCategories(context).length,
+                            itemCount: CategoryModel.getCategories(context, ref)
+                                .length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                             ),
                             itemBuilder: (context, index) {
-                              final category =
-                                  CategoryModel.getCategories(context)[index];
+                              final category = CategoryModel.getCategories(
+                                  context, ref)[index];
 
                               return Category(
                                 text: category.name,

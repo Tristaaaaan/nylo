@@ -102,6 +102,9 @@ class ChatInfo extends ConsumerWidget {
                                         .tertiaryContainer,
                                   ),
                                   CircleAvatar(
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .background,
                                     backgroundImage: image.groupChatImage !=
                                             null
                                         ? NetworkImage(image.groupChatImage!)

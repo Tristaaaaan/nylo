@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:study_buddy/pages/home/create_study_group.dart';
 import 'package:study_buddy/pages/home/my_courses.dart';
 import 'package:study_buddy/pages/home/my_study_groups.dart';
 import 'package:study_buddy/pages/home/search_study_group.dart';
+import 'package:study_buddy/structure/providers/groupchat_provider.dart';
 
 class CategoryModel {
   String name;
@@ -19,7 +21,8 @@ class CategoryModel {
     required this.caption,
   });
 
-  static List<CategoryModel> getCategories(BuildContext context) {
+  static List<CategoryModel> getCategories(
+      BuildContext context, WidgetRef ref) {
     List<CategoryModel> categories = [];
 
     categories.add(
@@ -88,6 +91,8 @@ class CategoryModel {
               builder: (context) => FindStudyGroup(),
             ),
           );
+          ref.read(searchQueryLengthProvider.notifier).update((state) => 0);
+          ref.read(searchQueryProvider.notifier).update((state) => '');
         },
       ),
     );

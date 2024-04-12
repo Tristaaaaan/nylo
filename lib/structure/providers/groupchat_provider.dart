@@ -202,6 +202,8 @@ final groupChatMemberRequestProvider =
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
+final searchQueryLengthProvider = StateProvider<int>((ref) => 0);
+
 final groupChatProvider = StateProvider.autoDispose<GroupChat>((ref) {
   return GroupChat();
 });
