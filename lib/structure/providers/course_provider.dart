@@ -30,8 +30,7 @@ final multipleStudentCoursesInformationProvider =
 });
 
 final currentStudentCoursesInformationProvider =
-    StreamProvider.family<List<StudentCoursesModel>, String>(
-        (ref, userId) async* {
+    StreamProvider.family<List<StudentCoursesModel>, String>((ref, userId) {
   final institutionId = ref.watch(setGlobalUniversityId);
 
   final getCurrentUserCourses = _firestore
@@ -49,12 +48,11 @@ final currentStudentCoursesInformationProvider =
             .where((course) => !course.isCompleted)
             .toList(),
       );
-  yield* getCurrentUserCourses;
+  return getCurrentUserCourses;
 });
 
 final completedStudentCoursesInformationProvider =
-    StreamProvider.family<List<StudentCoursesModel>, String>(
-        (ref, userId) async* {
+    StreamProvider.family<List<StudentCoursesModel>, String>((ref, userId) {
   final institutionId = ref.watch(setGlobalUniversityId);
 
   final getCompletedUserCourses = _firestore
@@ -72,12 +70,12 @@ final completedStudentCoursesInformationProvider =
             .where((course) => course.isCompleted)
             .toList(),
       );
-  yield* getCompletedUserCourses;
+  return getCompletedUserCourses;
 });
 
 // search course
 final unenrolledCoursesProvider = StreamProvider.family
-    .autoDispose<List<SubjectModel>, String>((ref, userId) async* {
+    .autoDispose<List<SubjectModel>, String>((ref, userId) {
   final searchQuery = ref.watch(courseSearchQueryProvider);
   print("UNENROLLED COURSE");
   final institutionId = ref.watch(setGlobalUniversityId);
@@ -102,7 +100,7 @@ final unenrolledCoursesProvider = StreamProvider.family
             .toList(),
       );
 
-  yield* getCourses;
+  return getCourses;
 });
 
 // ======================= STATE PROVIDERS =============================

@@ -8,7 +8,7 @@ import 'package:study_buddy/structure/services/user_service.dart';
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final UserInformation _userInformation = UserInformation();
 // get all the university
-final universityProvider = StreamProvider<List<UniversityModel>>((ref) async* {
+final universityProvider = StreamProvider<List<UniversityModel>>((ref) {
   final getUniversities = _firestore.collection("institution").snapshots().map(
         (querySnapshot) => querySnapshot.docs
             .map(
@@ -16,7 +16,7 @@ final universityProvider = StreamProvider<List<UniversityModel>>((ref) async* {
             )
             .toList(),
       );
-  yield* getUniversities;
+  return getUniversities;
 });
 
 // get all the university domain
@@ -51,26 +51,20 @@ final listOfDomains = StreamProvider<List<Map<String, dynamic>>>((ref) {
 // });
 // search university
 final searchUniversityProvier =
-    StreamProvider.autoDispose<List<UniversityModel>>((ref) async* {
+    StreamProvider.autoDispose<List<UniversityModel>>((ref) {
   final searchQuery = ref.watch(uniSearchQueryProvider);
 
-  try {
-    final searchUniversities =
-        _firestore.collection("institution").snapshots().map(
-              (querySnapshot) => querySnapshot.docs
-                  .map((snapshot) => UniversityModel.fromSnapshot(snapshot))
-                  .where((university) => university.uniName
-                      .toLowerCase()
-                      .contains(searchQuery.toLowerCase()))
-                  .toList(),
-            );
+  final searchUniversities =
+      _firestore.collection("institution").snapshots().map(
+            (querySnapshot) => querySnapshot.docs
+                .map((snapshot) => UniversityModel.fromSnapshot(snapshot))
+                .where((university) => university.uniName
+                    .toLowerCase()
+                    .contains(searchQuery.toLowerCase()))
+                .toList(),
+          );
 
-    yield* searchUniversities;
-  } catch (e) {
-    print("Error fetching universities: $e");
-    // You can choose to yield an empty list or another default value here
-    yield [];
-  }
+  return searchUniversities;
 });
 
 final getUniversityId = FutureProvider.family<String, String>(

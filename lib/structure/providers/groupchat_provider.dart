@@ -42,7 +42,7 @@ final singleMemberGroupChatInformationProvider =
 
 // collect to all the document
 final multipleGroupChatInformationProvider =
-    StreamProvider<List<GroupChatModel>>((ref) async* {
+    StreamProvider<List<GroupChatModel>>((ref) {
   final institutionId = ref.watch(setGlobalUniversityId);
   final getStudyGroups = _firestore
       .collection("institution")
@@ -56,12 +56,12 @@ final multipleGroupChatInformationProvider =
             )
             .toList(),
       );
-  yield* getStudyGroups;
+  return getStudyGroups;
 });
 
 final groupChatMembersProvider =
     StreamProvider.family<List<ChatMembersModel>, String>(
-  (ref, chatId) async* {
+  (ref, chatId) {
     final institutionId = ref.watch(setGlobalUniversityId);
     final getMembers = _firestore
         .collection("institution")
@@ -78,14 +78,14 @@ final groupChatMembersProvider =
               .toList(),
         );
 
-    yield* getMembers;
+    return getMembers;
   },
 );
 
 final courseIdProvider =
-    StreamProvider.family<List<String>, String>((ref, userId) async* {
+    StreamProvider.family<List<String>, String>((ref, userId) {
   final institutionId = ref.watch(setGlobalUniversityId);
-  yield* _firestore
+  return _firestore
       .collection("institution")
       .doc(institutionId)
       .collection("students")
@@ -99,7 +99,7 @@ final courseIdProvider =
 });
 
 final selectedGroupChatInformationProvider = StreamProvider.family
-    .autoDispose<List<GroupChatModel>, String>((ref, userId) async* {
+    .autoDispose<List<GroupChatModel>, String>((ref, userId) {
   final searchQuery = ref.watch(searchQueryProvider);
   final coursesTaken = ref.watch(courseIdProvider(userId)).value;
   final institutionId = ref.watch(setGlobalUniversityId);
@@ -126,11 +126,11 @@ final selectedGroupChatInformationProvider = StreamProvider.family
             .toList(),
       );
 
-  yield* getStudyGroups;
+  return getStudyGroups;
 });
 // get User Study Groups
 final userChatIdsProvider = StreamProvider.family<List<GroupChatModel>, String>(
-  (ref, userId) async* {
+  (ref, userId) {
     final institutionId = ref.watch(setGlobalUniversityId);
     final userStudyGroups = _firestore
         .collection("institution")
@@ -149,7 +149,7 @@ final userChatIdsProvider = StreamProvider.family<List<GroupChatModel>, String>(
               .where((group) => group.membersId.contains(userId))
               .toList(),
         );
-    yield* userStudyGroups;
+    return userStudyGroups;
   },
 );
 
