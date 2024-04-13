@@ -7,6 +7,7 @@ import 'package:study_buddy/error/login_response.dart';
 import 'package:study_buddy/structure/messaging/message_api.dart';
 import 'package:study_buddy/structure/models/user_model.dart';
 import 'package:study_buddy/structure/services/university_service.dart';
+import 'package:study_buddy/structure/services/user_service.dart';
 
 class AuthService {
   // instance of Auth
@@ -14,6 +15,7 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseMessage _firebaseMessage = FirebaseMessage();
   final UniversityInfo _universityInfo = UniversityInfo();
+  final UserInformation _userInfo = UserInformation();
   // signin
 // signin
   Future<LoginResponse> signInWithEmailPassword(
@@ -202,6 +204,12 @@ class AuthService {
       // get the uniId where the domain belongs to
 
       // Add user to Firestore
+      final getUser = await _userInfo.getUserInfo(userId, uni!);
+
+      final userData = getUser.data();
+
+      String name = userData!['name'];
+      String image = userData['imageUrl'];
 
       await _firestore.collection('institution').doc(uni).update({
         'students': FieldValue.arrayUnion([userId]),
@@ -216,8 +224,8 @@ class AuthService {
         {
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
-          'name': userCredential.user!.displayName,
-          'imageUrl': userCredential.user!.photoURL,
+          'name': name.isEmpty ? userCredential.user!.displayName : name,
+          'imageUrl': image.isEmpty ? userCredential.user!.photoURL : image,
           'fcmtoken': fcmtoken,
           'universityId': uni,
           'university': uniName,
