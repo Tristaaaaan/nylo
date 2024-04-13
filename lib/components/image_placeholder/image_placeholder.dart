@@ -28,12 +28,14 @@ class ImagePlaceholder extends StatelessWidget {
           children: [
             Text(
               title,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: titleFontSize,
               ),
             ),
             Text(
               subtitle,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: subtitleFontSize,
                 fontWeight: FontWeight.normal,

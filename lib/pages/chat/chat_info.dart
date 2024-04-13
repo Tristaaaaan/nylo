@@ -114,8 +114,8 @@ class ChatInfo extends ConsumerWidget {
                                       : ImagePlaceholder(
                                           title: courseCode,
                                           subtitle: "Study Group",
-                                          titleFontSize: 10,
-                                          subtitleFontSize: 8,
+                                          titleFontSize: 12,
+                                          subtitleFontSize: 10,
                                         ),
                                   Padding(
                                     padding: const EdgeInsets.all(8),

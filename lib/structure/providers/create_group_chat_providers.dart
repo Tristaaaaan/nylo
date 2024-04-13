@@ -8,13 +8,13 @@ typedef ChatNameDescription = String;
 typedef CourseId = String;
 typedef CourseTitle = String;
 
-final selectedCourseProvider = StateProvider<CourseCode?>((ref) => '');
+final selectedCourseProvider = StateProvider<CourseCode?>((ref) => null);
 final chatNameProvider = StateProvider<ChatName?>((ref) => '');
 final chatDescriptionProvider =
     StateProvider<ChatNameDescription?>((ref) => '');
-final selectedcourseIdProvider = StateProvider<CourseId?>((ref) => '');
+final selectedcourseIdProvider = StateProvider<CourseId?>((ref) => null);
 
-final selectedcourseTitleProvider = StateProvider<CourseTitle?>((ref) => '');
+final selectedcourseTitleProvider = StateProvider<CourseTitle?>((ref) => null);
 final buttonColorProvider = StateProvider<bool>((ref) {
   final selectedCourse = ref.watch(selectedCourseProvider);
   final chatName = ref.watch(chatNameProvider);

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:study_buddy/components/buttons/rounded_button_with_progress.dart';
 import 'package:study_buddy/components/dialogs/create_group.dart';
+import 'package:study_buddy/components/image_placeholder/image_placeholder.dart';
 import 'package:study_buddy/components/no_data_holder.dart';
 import 'package:study_buddy/components/textfields/rounded_textfield_title.dart';
 import 'package:study_buddy/pages/home/my_courses.dart';
@@ -92,6 +93,16 @@ class CreateStudyGroup extends ConsumerWidget {
                               backgroundColor: Theme.of(context)
                                   .colorScheme
                                   .tertiaryContainer,
+                              child: ImagePlaceholder(
+                                title: ref.watch(selectedCourseProvider) != ''
+                                    ? ref
+                                        .watch(selectedCourseProvider)
+                                        .toString()
+                                    : "Create",
+                                subtitle: "Study Group",
+                                titleFontSize: 8,
+                                subtitleFontSize: 6,
+                              ),
                             ),
                             if (ref.watch(editUploadImagePathProvider) != null)
                               CircleAvatar(
@@ -103,11 +114,27 @@ class CreateStudyGroup extends ConsumerWidget {
                               padding: const EdgeInsets.all(8),
                               child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.primary,
-                                  radius: 13,
-                                  child: const Icon(Icons.add),
+                                child: Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      radius: 13,
+                                    ),
+                                    CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                      radius: 12,
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

@@ -4,6 +4,7 @@ import 'package:study_buddy/pages/home/create_study_group.dart';
 import 'package:study_buddy/pages/home/my_courses.dart';
 import 'package:study_buddy/pages/home/my_study_groups.dart';
 import 'package:study_buddy/pages/home/search_study_group.dart';
+import 'package:study_buddy/structure/providers/create_group_chat_providers.dart';
 import 'package:study_buddy/structure/providers/groupchat_provider.dart';
 
 class CategoryModel {
@@ -74,6 +75,18 @@ class CategoryModel {
               builder: (context) => CreateStudyGroup(),
             ),
           );
+
+          ref.read(selectedCourseProvider.notifier).update((state) => '');
+          ref.read(selectedcourseIdProvider.notifier).update((state) => '');
+          ref.read(selectedcourseTitleProvider.notifier).update((state) => '');
+
+          ref
+              .read(editUploadImagePathNameProvider.notifier)
+              .update((state) => '');
+          ref
+              .read(editUploadImagePathProvider.notifier)
+              .update((state) => null);
+          ref.read(editUploadImageNameProvider.notifier).update((state) => '');
         },
       ),
     );
