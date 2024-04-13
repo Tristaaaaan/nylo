@@ -54,12 +54,10 @@ class ChatService {
     print("userInfodata: $userInfodata");
 
     final userName = userInfodata!['name'];
-    final imageUrl = userInfodata['imageUrl'];
 
     // get current user info
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final String curreUserEmail = userName;
-    final String currentPhoto = imageUrl ?? "";
 
     final Timestamp timestamp = Timestamp.now();
 
@@ -102,10 +100,8 @@ class ChatService {
     // create a new message
     MessageModel newMessage = MessageModel(
       senderId: currentUserId,
-      senderEmail: curreUserEmail,
       groupChatId: groupChatid,
       message: message,
-      senderImage: currentPhoto,
       timestamp: timestamp,
       type: type,
       downloadUrl: downloadUrl,
@@ -154,22 +150,18 @@ class ChatService {
     print("userInfodata: $userInfodata");
 
     final userName = userInfodata!['name'];
-    final imageUrl = userInfodata['imageUrl'];
 
     // get current user info
     final String currentUserId = _firebaseAuth.currentUser!.uid;
     final String curreUserEmail = userName;
-    final String currentPhoto = imageUrl ?? "";
 
     final Timestamp timestamp = Timestamp.now();
 
     // create a new message
     MessageModel newMessage = MessageModel(
       senderId: currentUserId,
-      senderEmail: curreUserEmail,
       groupChatId: groupChatid,
       message: message,
-      senderImage: currentPhoto,
       timestamp: timestamp,
       type: type,
       downloadUrl: downloadUrl,

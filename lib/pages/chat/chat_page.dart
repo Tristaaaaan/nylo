@@ -12,6 +12,7 @@ import 'package:study_buddy/structure/providers/create_group_chat_providers.dart
 import 'package:study_buddy/structure/providers/groupchat_provider.dart';
 import 'package:study_buddy/structure/providers/storage_provider.dart';
 import 'package:study_buddy/structure/providers/university_provider.dart';
+import 'package:study_buddy/structure/providers/user_provider.dart';
 
 class ChatPage extends ConsumerWidget {
   final String groupChatId;
@@ -47,6 +48,7 @@ class ChatPage extends ConsumerWidget {
     final groupChatMembers = ref.watch(
       groupChatMembersProvider(groupChatId),
     );
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -99,13 +101,12 @@ class ChatPage extends ConsumerWidget {
                             reverse: true,
                             itemBuilder: (context, index) {
                               final messageInfo = message[index];
-                              final String fullName = messageInfo.senderEmail;
-                              final List<String> nameParts =
-                                  fullName.split(' ');
-                              final String firstName = nameParts[0];
-                              final String format =
-                                  firstName.substring(0, 1).toUpperCase() +
-                                      firstName.substring(1).toLowerCase();
+
+                              final userInfo = ref.watch(
+                                userInfoProvider(
+                                  messageInfo.senderId,
+                                ),
+                              );
                               return Padding(
                                 padding:
                                     const EdgeInsets.only(left: 10, right: 10),
@@ -139,12 +140,24 @@ class ChatPage extends ConsumerWidget {
                                         alignment: Alignment.topRight,
                                         child: Stack(
                                           children: [
-                                            CircleAvatar(
-                                              radius: 20,
-                                              backgroundImage: NetworkImage(
-                                                messageInfo.senderImage,
+                                            // change image
+                                            userInfo.when(
+                                              data: (data) {
+                                                return CircleAvatar(
+                                                  radius: 20,
+                                                  backgroundImage: NetworkImage(
+                                                    data.imageUrl,
+                                                  ),
+                                                );
+                                              },
+                                              error: (error, stackTrace) =>
+                                                  Text(
+                                                error.toString(),
                                               ),
+                                              loading: () =>
+                                                  const CircularProgressIndicator(),
                                             ),
+
                                             Container(
                                               height: 20,
                                               color: Theme.of(context)
@@ -172,10 +185,22 @@ class ChatPage extends ConsumerWidget {
                                             ),
                                             child: Row(
                                               children: [
-                                                Text(
-                                                  format,
-                                                  style: const TextStyle(
-                                                      fontSize: 14),
+                                                userInfo.when(
+                                                  data: (data) {
+                                                    final formattedName =
+                                                        formatName(data.name);
+                                                    return Text(
+                                                      formattedName,
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    );
+                                                  },
+                                                  error: (error, stackTrace) =>
+                                                      Text(
+                                                    error.toString(),
+                                                  ),
+                                                  loading: () =>
+                                                      const CircularProgressIndicator(),
                                                 ),
                                                 const SizedBox(
                                                   width: 10,
@@ -188,7 +213,7 @@ class ChatPage extends ConsumerWidget {
                                           downloadUrl:
                                               messageInfo.downloadUrl ?? '',
                                           type: messageInfo.type,
-                                          time: DateFormat('dd/MM ' 'hh:mm a')
+                                          time: DateFormat('MM/dd ' 'hh:mm a')
                                               .format(
                                             messageInfo.timestamp.toDate(),
                                           ),
@@ -414,4 +439,14 @@ class ChatPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+String formatName(String name) {
+  final String fullName = name;
+  final List<String> nameParts = fullName.split(' ');
+  final String firstName = nameParts[0];
+  final String format = firstName.substring(0, 1).toUpperCase() +
+      firstName.substring(1).toLowerCase();
+
+  return format;
 }

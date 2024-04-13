@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:study_buddy/components/image_placeholder/image_placeholder.dart';
 import 'package:study_buddy/components/no_data_holder.dart';
 import 'package:study_buddy/pages/chat/chat_page.dart';
 import 'package:study_buddy/pages/home/search_study_group.dart';
@@ -107,19 +108,23 @@ class FindPage extends ConsumerWidget {
                               children: [
                                 Stack(
                                   children: [
-                                    Container(
-                                      height: 60,
-                                      width: 60,
-                                      padding: const EdgeInsets.all(5),
-                                      child: CircleAvatar(
-                                        backgroundImage:
-                                            chatIds.groupChatImage != null
-                                                ? NetworkImage(
-                                                    chatIds.groupChatImage!)
-                                                : null,
-                                        radius: 30,
-                                      ),
-                                    ),
+                                    chatIds.groupChatImage != ''
+                                        ? Container(
+                                            height: 70,
+                                            width: 70,
+                                            padding: const EdgeInsets.all(5),
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  chatIds.groupChatImage!),
+                                              radius: 30,
+                                            ),
+                                          )
+                                        : ImagePlaceholder(
+                                            title: chatIds.studyGroupCourseName,
+                                            subtitle: "Study Group",
+                                            titleFontSize: 8,
+                                            subtitleFontSize: 6,
+                                          ),
                                     if (chatIds.membersRequestId.isNotEmpty &&
                                         _auth.currentUser!.uid ==
                                             chatIds.creatorId)
