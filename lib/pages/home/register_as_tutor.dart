@@ -7,6 +7,7 @@ import 'package:study_buddy/components/textfields/rounded_textfield_title.dart';
 import 'package:study_buddy/structure/providers/course_provider.dart';
 import 'package:study_buddy/structure/providers/create_group_chat_providers.dart';
 import 'package:study_buddy/structure/providers/groupchat_provider.dart';
+import 'package:study_buddy/structure/providers/subject_matter.dart';
 import 'package:study_buddy/structure/providers/university_provider.dart';
 
 class RegisterAsTutorPage extends ConsumerWidget {
@@ -86,18 +87,16 @@ class RegisterAsTutorPage extends ConsumerWidget {
                     text: "Register",
                     onTap: () async {
                       ref.read(isLoadingProvider.notifier).state = true;
+
                       final success =
-                          await ref.read(groupChatProvider).addStudyGroup(
+                          await ref.read(subjectMatterProvider).teachCourse(
+                                _auth.currentUser!.uid,
+                                subjectId,
+                                subjectCode,
+                                subjectTitle,
                                 _nameController.text,
                                 _descriptionController.text,
-                                selectedCourse.toString(),
-                                courseId.toString(),
-                                courseTitle.toString(),
                                 ref.watch(setGlobalUniversityId),
-                                ref
-                                    .watch(editUploadImagePathNameProvider)
-                                    .toString(),
-                                ref.watch(editUploadImageNameProvider),
                               );
 
                       ref.read(isLoadingProvider.notifier).state = false;
