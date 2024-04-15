@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "944049282603-ldcihjor6m1cr317tum2vie0sbnaff9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.study_buddy",
+            "certificate_hash": "a233c17fb61dd3ac942c3b1320604153127caa4a"
+          }
+        },
+        {
           "client_id": "944049282603-47v809br2tdei3al7prjuqqvt1ml1khm.apps.googleusercontent.com",
           "client_type": 3
         }

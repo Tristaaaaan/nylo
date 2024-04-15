@@ -204,12 +204,12 @@ class AuthService {
       // get the uniId where the domain belongs to
 
       // Add user to Firestore
-      final getUser = await _userInfo.getUserInfo(userId, uni!);
+      // final getUser = await _userInfo.getUserInfo(userId, uni!);
 
-      final userData = getUser.data();
+      // final userData = getUser.data();
 
-      String name = userData!['name'];
-      String image = userData['imageUrl'];
+      // String name = userData!['name'];
+      // String image = userData['imageUrl'];
 
       await _firestore.collection('institution').doc(uni).update({
         'students': FieldValue.arrayUnion([userId]),
@@ -224,8 +224,10 @@ class AuthService {
         {
           'uid': userCredential.user!.uid,
           'email': userCredential.user!.email,
-          'name': name.isEmpty ? userCredential.user!.displayName : name,
-          'imageUrl': image.isEmpty ? userCredential.user!.photoURL : image,
+          'name': userCredential.user!
+              .displayName, //name.isEmpty ? userCredential.user!.displayName : name,
+          'imageUrl': userCredential.user!
+              .photoURL, //image.isEmpty ? userCredential.user!.photoURL : image,
           'fcmtoken': fcmtoken,
           'universityId': uni,
           'university': uniName,

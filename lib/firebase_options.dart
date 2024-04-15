@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -73,12 +70,22 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAUxK9ry9olUnvrQbGH4446Dexup7By5WA',
-    appId: '1:944049282603:ios:b1149325aec730eb04d46e',
+    appId: '1:944049282603:ios:fedc20b600ef69ca04d46e',
     messagingSenderId: '944049282603',
     projectId: 'stuco-ff938',
     storageBucket: 'stuco-ff938.appspot.com',
     androidClientId: '944049282603-bu37cn5m7a7h1puqc6tph8rd3psjsb1e.apps.googleusercontent.com',
-    iosClientId: '944049282603-dgetopl4h5o92pmst2q1f6mhk68ubmsm.apps.googleusercontent.com',
-    iosBundleId: 'com.example.studyBuddy.RunnerTests',
+    iosClientId: '944049282603-uhckg8919sombo5bjcce0lh5u53d7soc.apps.googleusercontent.com',
+    iosBundleId: 'com.example.studyBuddy',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDrBj6TJaQdN0HIHI9f9fvUfIDxx2dh5aU',
+    appId: '1:944049282603:web:fd236bdc35d5b04f04d46e',
+    messagingSenderId: '944049282603',
+    projectId: 'stuco-ff938',
+    authDomain: 'stuco-ff938.firebaseapp.com',
+    storageBucket: 'stuco-ff938.appspot.com',
+  );
+
 }
